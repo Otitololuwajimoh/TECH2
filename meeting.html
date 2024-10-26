@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>otitololuwa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F0F0F5;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #4B0082;
+        /* Indigo */
+        padding: 10px 20px;
+        color: white;
+    }
+
+    .navbar-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-right a {
+        color: white;
+        margin-left: 15px;
+        text-decoration: none;
+        font-size: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .navbar-right a:hover i {
+        transform: scale(1.2);
+        color: #9370DB;
+        /* Medium Purple */
+    }
+
+    .navbar-right a i {
+        margin-right: 8px;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    /* Submit Project Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.5s ease;
+    }
+
+    .modal-content {
+        background-color: #FFFFFF;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+        animation: slideDown 0.5s ease;
+    }
+
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #CCC;
+        border-radius: 5px;
+    }
+
+    .modal-content button {
+        background-color: #4B0082;
+        /* Indigo */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .modal-content button:hover {
+        background-color: #9370DB;
+        /* Medium Purple */
+        transform: scale(1.05);
+    }
+
+    .success-message {
+        text-align: center;
+        margin-top: 20px;
+        color: green;
+        display: none;
+    }
+
+    .iframe-container {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    /* Sidebar for Class Details */
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #E6E6FA;
+        /* Lavender */
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        color: #333333;
+        /* Dark grey */
+    }
+
+    .sidebar h2 {
+        padding: 20px;
+        text-align: center;
+        color: #4B0082;
+    }
+
+    .sidebar p {
+        padding: 10px 20px;
+        font-size: 18px;
+        color: #333333;
+        /* Dark grey */
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 36px;
+        cursor: pointer;
+        color: rgb(74, 31, 122);
+    }
+
+    .close-btn:hover {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 46px;
+        cursor: pointer;
+        color: #591f83;
+
+    }
+    /*class detail only the text*/
+   .detail{
+        padding: px;
+        border-color: #4B0082;
+        border-radius: 2\9px;
+        font-size: 30px;
+        padding-bottom: 40px;
+        cursor: default;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        background-color: #e6e6e6;
+        
+    }
+.detail:hover{
+        
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        background-color: #dddddd;
+        
+    }
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+            color: #4B0082;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+            color: #333333;
+        }
+    }
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <span class="brand-name">otitololuwa</span>
+        </div>
+        <div class="navbar-right">
+            <a id="submit-project-link">
+                <i class="fas fa-file-upload"></i> Submit Project
+            </a>
+            <a id="class-details-link">
+                <i class="fas fa-chalkboard"></i> Class Details
+            </a>
+        </div>
+    </div>
+
+    <!-- Submit Project Modal -->
+    <div id="submit-project-modal" class="modal">
+        <div class="modal-content">
+            <h2>Submit Your Project</h2>
+            <input type="text" id="assignment-link" placeholder="Enter the project link">
+            <input type="text" id="assignment-name" placeholder="Enter the assignment name">
+            <button id="submit-project-btn">Submit</button>
+            <p id="success-message" class="success-message">You have successfully submitted: <span
+                    id="submitted-name"></span></p>
+        </div>
+    </div>
+<!--badge-->
+<div id="submit-project-modal" class="modal">
+    <div class="modal-content">
+        <h2>badge</h2>
+        <input type="text" id="assignment-link" placeholder="Enter the project link">
+        <input type="text" id="assignment-name" placeholder="Enter the assignment name">
+        <button id="submit-project-btn">Submit</button>
+        <p id="success-message" class="success-message">You have successfully submitted: <span
+                id="submitted-name"></span></p>
+    </div>
+</div>
+
+    <!-- Sidebar for Class Details -->
+    <div id="class-details-sidebar" class="sidebar">
+        <span class="close-btn" id="close-sidebar">&times;</span>
+        <h2 class="detail"></h2>
+        <p>HTML can be defined as the backbone of a website in this module your teacher will teach you about tags it!</p>
+    </div>
+
+    <!-- iFrame section -->
+    <div class="iframe-container">
+        <iframe src="https://educa.whereby.com/demo-920bdd20-239d-4c6e-9c48-b139f3ff8e7b"
+            allow="camera; microphone; fullscreen; speaker; display-capture; compute-pressure"
+            style="height: 700px; width: 100%"></iframe>
+    </div>
+
+    <script>
+        // Open the modal when "Submit Project" is clicked
+        document.getElementById('submit-project-link').addEventListener('click', function () {
+            document.getElementById('submit-project-modal').style.display = 'block';
+        });
+
+        // Handle the submit button click
+        document.getElementById('submit-project-btn').addEventListener('click', function () {
+            // Get the values of the inputs
+            const assignmentLink = document.getElementById('assignment-link').value;
+            const assignmentName = document.getElementById('assignment-name').value;
+
+            // Show success message and the name of the assignment
+            document.getElementById('submitted-name').textContent = assignmentName;
+            document.getElementById('success-message').style.display = 'block';
+
+            // Clear the inputs
+            document.getElementById('assignment-link').value = '';
+            document.getElementById('assignment-name').value = '';
+
+            // Close the modal after 2 seconds
+            setTimeout(function () {
+                document.getElementById('submit-project-modal').style.display = 'none';
+                document.getElementById('success-message').style.display = 'none';
+            }, 2000);
+        });
+
+        // Close the modal if clicked outside of the modal content
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('submit-project-modal')) {
+                document.getElementById('submit-project-modal').style.display = 'none';
+            }
+        };
+
+        // Open and close the sidebar for "Class Details"
+        document.getElementById('class-details-link').addEventListener('click', function () {
+            document.getElementById('class-details-sidebar').style.width = '300px';
+        });
+
+        document.getElementById('close-sidebar').addEventListener('click', function () {
+            document.getElementById('class-details-sidebar').style.width = '0';
+        });
+    </script>
+
+</body>
+
+</html>
